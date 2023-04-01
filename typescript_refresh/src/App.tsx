@@ -1,36 +1,22 @@
 import React from "react";
 import logo from "./logo.svg";
 import "./App.css";
-import { Greet } from "./components/Greet";
-import { Person } from "./components/Person";
-import { PersonList } from "./components/PersonList";
+
+import { BrowserRouter, Link, Routes } from "react-router-dom";
+import { LoginLogout } from "./components/LoginLogout";
+import { Route } from "react-router-dom";
+import { Main } from "./components/Main";
 
 function App() {
-  const personName = {
-    first: "Andy",
-    last: "Foo",
-  };
-
-  const personNameList = [
-    {
-      first: "John",
-      last: "Foo",
-    },
-    {
-      first: "Vincent",
-      last: "Foo",
-    },
-    {
-      first: "Ben",
-      last: "Foo",
-    },
-  ];
-
   return (
     <div className="App">
-      <Greet name="ANdy" />
-      <Person name={personName} />
-      <PersonList names={personNameList} />
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Main />}></Route>
+          <Route path="/another-page" element={<LoginLogout />}></Route>
+        </Routes>
+        <br></br>
+      </BrowserRouter>
     </div>
   );
 }

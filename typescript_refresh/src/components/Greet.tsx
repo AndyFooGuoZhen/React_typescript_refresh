@@ -1,5 +1,6 @@
 type GreetProps = {
   name: string;
+  age?: number; //this age prop is optional
 };
 
 export const Greet = (props: GreetProps) => {

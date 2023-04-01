@@ -11,8 +11,9 @@ export const PersonList = (props: PersonNameList) => {
       {props.names.map((name) => {
         return (
           <>
-            <h2 key={name.first}>{name.first}</h2>
-            <h2 key={name.last}>{name.last}</h2>
+            <h2 key={name.first}>
+              {name.first} {name.last}
+            </h2>
           </>
         );
       })}
