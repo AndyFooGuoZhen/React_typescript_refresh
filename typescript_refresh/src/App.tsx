@@ -6,6 +6,7 @@ import { BrowserRouter, Link, Routes } from "react-router-dom";
 import { LoginLogout } from "./components/LoginLogout";
 import { Route } from "react-router-dom";
 import { Main } from "./components/Main";
+import { Counter } from "./components/Counter";
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Main />}></Route>
           <Route path="/another-page" element={<LoginLogout />}></Route>
+          <Route path="/counter" element={<Counter />}></Route>
         </Routes>
         <br></br>
       </BrowserRouter>

@@ -32,6 +32,8 @@ export const Main = () => {
       <PersonList names={personNameList} />
       <Heading>Hello</Heading>
       <Link to="/another-page">Go to another page</Link>
+      <br></br>
+      <Link to="/counter">useReducer tutorial</Link>
     </div>
   );
 };

@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { ReactEventHandler, useState } from "react";
 
+//Shows defining types for useState
 export const LoginLogout = () => {
   const [name, setName] = useState<string | null>(null);
 
