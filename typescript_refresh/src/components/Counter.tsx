@@ -1,5 +1,5 @@
 import { useReducer } from "react";
-
+import { Link } from "react-router-dom";
 //useReducer
 
 export const Counter = () => {
@@ -42,6 +42,8 @@ export const Counter = () => {
       >
         Decrement
       </button>
+      <br></br>
+      <Link to="/">Go to main page</Link>
     </div>
   );
 };
