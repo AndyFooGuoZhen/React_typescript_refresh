@@ -1,46 +1,139 @@
-# Getting Started with Create React App
+#Lessons learned
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+###Defining props with a certain type using a type or interface
+Use ? to indicate optional fields
+```
+type GreetProps = {
+  name: string;
+  age?: number; //this age prop is optional
+};
 
-## Available Scripts
+export const Greet = (props: GreetProps) => {
+  return (
+    <div>
+      <h2>HEllo this is a greeting {props.name}</h2>
+    </div>
+  );
+};
+```
 
-In the project directory, you can run:
+###useReducer 
+Works like setState, instead of setState, pass in a custom function to handle condition 
+```
+export const Counter = () => {
+  const initialState = { count: 0 };
 
-### `npm start`
+  type CounterState = {
+    count: number;
+  };
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+  //Something like useState, instead of statestate,
+  // the setState is replaced with a function called dispatch
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+  const [state, dispatch] = useReducer(reducer, initialState);
 
-### `npm test`
+  function reducer(state: CounterState, action: string): CounterState {
+    switch (action) {
+      case "increment":
+        return { count: state.count + 1 };
+      case "decrement":
+        return { count: state.count - 1 };
+      default:
+        return state;
+    }
+  }
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+  return (
+    <div>
+      <h2>Hello this is your count: {state.count} </h2>
+      <button
+        onClick={() => {
+          dispatch("increment");
+        }}
+      >
+        Increment
+      </button>
+      <button
+        onClick={() => {
+          dispatch("decrement");
+        }}
+      >
+        Decrement
+      </button>
+      <br></br>
+      <Link to="/">Go to main page</Link>
+    </div>
+  );
+};
 
-### `npm run build`
+  ```
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+###useContext
+Used for passing down props to children components without passing into each level manually
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+Main.tsx
+```
+interface stateContext {
+  pressed: boolean;
+  setPressed: React.Dispatch<React.SetStateAction<boolean>>;
+}
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+export const Context = React.createContext<stateContext>({
+  pressed: false,
+  setPressed: () => {},
+});
 
-### `npm run eject`
+function StateProvider(props: { children: React.ReactNode }) {
+  const [pressed, setPressed] = useState(false);
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+  const value: stateContext = {
+    pressed,
+    setPressed,
+  };
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+  return <Context.Provider value={value} {...props} />;
+}
+export const Main = () => {
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+  return (
+    <div>
+      <StateProvider>
+        <Nav />
+      </StateProvider>
+    </div>
+  );
+};
+```
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+Nav.tsx
+```
+import { Button } from "./Button";
 
-## Learn More
+//Serves as a parent component for button
+//Used for demonstrating useContext
+export const Nav = () => {
+  return (
+    <div>
+      <Button />
+    </div>
+  );
+};
+```
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+Button.tsx
+```
+ const Button = () => {
+  const state = useContext(Context);
+  console.log(state);
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+  return (
+    <div>
+      <button onClick={() => state.setPressed(!state.pressed)}>Hello</button>
+      <br></br>
+      {state.pressed ? "Pressed" : "Not pressed"}
+      <br></br>
+      <Link to="/">Go to main page</Link>
+    </div>
+  );
+};
+```
