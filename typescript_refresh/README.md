@@ -16,7 +16,7 @@ export const Greet = (props: GreetProps) => {
   );
 };
 ```
-
+----------------
 ### useReducer 
 Works like setState, instead of setState, pass in a custom function to handle condition 
 ```
@@ -67,7 +67,7 @@ export const Counter = () => {
 };
 
   ```
-
+----
 ### useContext
 Used for passing down props to children components without passing into each level manually
 
@@ -122,7 +122,7 @@ export const Nav = () => {
 
 Button.tsx
 ```
- const Button = () => {
+export const Button = () => {
   const state = useContext(Context);
   console.log(state);
 
@@ -136,4 +136,89 @@ Button.tsx
     </div>
   );
 };
+```
+----
+## Generics
+Used for creating reusable functions or components with different data types
+
+###Dynamic return type for function
+```
+//If we do any, the return type will be any
+//Hence we add a generic to the function and param so that it dynamically returns the correct type
+
+function getFirstElement<T>(array:T[]){
+    return array[0]
+}
+
+const numbers = [1,2,3]
+const firstNum = getFirstElement(numbers)
+
+const string = ["1","2","3"]
+const firstStr = getFirstElement(string)
+```
+
+### Generics in data typing
+
+#### Sample problem
+```
+// If data type is any, data might cause issues in development later
+// Need to figure out a way to dynamically change data type of data field
+
+type ApiResponse = {
+    data :any;
+    status: number;
+}
+
+const response : ApiResponse = {
+    data : 1,
+    status: 200
+}
+```
+
+####Solution
+```
+type ApiResponseDynamic<Data> = {
+    data :Data;
+    status: number;
+}
+
+type UserResponse = ApiResponseDynamic<{user:string, age:number}>
+type normalResponse = ApiResponseDynamic<{normal:string}>
+
+const userResponse : UserResponse = {
+    data : {user:"1", age:2},
+    status: 200
+}
+
+const normalResponse : normalResponse = {
+    data : {normal:"2"},
+    status: 200
+}  
+ ```
+
+#### Default generics
+```
+type defaultResponseDynamic<Data ={country :string}>={
+    data : Data,
+}
+
+const defaultResponse : defaultResponseDynamic = {
+    data : {country:"1"}
+}
+```
+
+#### Generics as Objects
+```
+type ObjectResponseDynamic<Data extends object> = {
+    data:Data;
+}
+
+//Error becuase string is not an object
+const nonObjectResponse : ObjectResponseDynamic<string> = {
+     data : "1"
+}
+
+const objectResponse : ObjectResponseDynamic<{name:string}> = {
+    data : {name:"1"}
+}
 ```
