@@ -141,7 +141,7 @@ export const Button = () => {
 ## Generics
 Used for creating reusable functions or components with different data types
 
-###Dynamic return type for function
+### Dynamic return type for function
 ```
 //If we do any, the return type will be any
 //Hence we add a generic to the function and param so that it dynamically returns the correct type
@@ -175,7 +175,7 @@ const response : ApiResponse = {
 }
 ```
 
-####Solution
+#### Solution
 ```
 type ApiResponseDynamic<Data> = {
     data :Data;
