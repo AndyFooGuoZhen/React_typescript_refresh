@@ -1,6 +1,6 @@
-#Lessons learned
+# Lessons learned
 
-###Defining props with a certain type using a type or interface
+### Defining props with a certain type using a type or interface
 Use ? to indicate optional fields
 ```
 type GreetProps = {
@@ -17,7 +17,7 @@ export const Greet = (props: GreetProps) => {
 };
 ```
 
-###useReducer 
+### useReducer 
 Works like setState, instead of setState, pass in a custom function to handle condition 
 ```
 export const Counter = () => {
@@ -68,7 +68,7 @@ export const Counter = () => {
 
   ```
 
-###useContext
+### useContext
 Used for passing down props to children components without passing into each level manually
 
 Main.tsx
